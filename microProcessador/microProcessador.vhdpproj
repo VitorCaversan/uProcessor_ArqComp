@@ -2,8 +2,10 @@
   <ItemGroup>
     <File Include="multiplex8x1.vhd" />
     <File Include="multiplex8x1_testbench.vhd" />
+    <File Include="ula.vhd" />
+    <File Include="ula_testbench.vhd" />
   </ItemGroup>
   <PropertyGroup>
-    <HardwareStartPath>multiplex8x1.vhd</HardwareStartPath>
+    <HardwareStartPath>ula.vhd</HardwareStartPath>
   </PropertyGroup>
 </Project>

@@ -2,11 +2,15 @@
 [Libraries]
 work.files = [
 	'multiplex8x1.vhd',
-	'multiplex8x1_testbench.vhd'
+	'multiplex8x1_testbench.vhd',
+	'ula.vhd',
+	'ula_testbench.vhd'
 ]
 [libraries.work]
 files = [
 	'multiplex8x1.vhd',
-	'multiplex8x1_testbench.vhd'
+	'multiplex8x1_testbench.vhd',
+	'ula.vhd',
+	'ula_testbench.vhd'
 ]
 # auto-generated-end
