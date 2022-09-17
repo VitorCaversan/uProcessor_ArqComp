@@ -1,0 +1,9 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="multiplex8x1.vhd" />
+    <File Include="multiplex8x1_testbench.vhd" />
+  </ItemGroup>
+  <PropertyGroup>
+    <HardwareStartPath>multiplex8x1.vhd</HardwareStartPath>
+  </PropertyGroup>
+</Project>
