@@ -3,6 +3,8 @@
 work.files = [
 	'multiplex8x1.vhd',
 	'multiplex8x1_testbench.vhd',
+	'reg_bank.vhd',
+	'reg_16_bits.vhd',
 	'ula.vhd',
 	'ula_testbench.vhd'
 ]
@@ -10,6 +12,8 @@ work.files = [
 files = [
 	'multiplex8x1.vhd',
 	'multiplex8x1_testbench.vhd',
+	'reg_bank.vhd',
+	'reg_16_bits.vhd',
 	'ula.vhd',
 	'ula_testbench.vhd'
 ]

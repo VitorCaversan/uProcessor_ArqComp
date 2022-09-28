@@ -13,7 +13,7 @@ architecture rtl of ula_testbench is
             b          : IN unsigned (15 downto 0);
             selec      : IN unsigned (1 downto 0);
             output     : OUT unsigned (15 downto 0);
-            equal       : OUT std_logic ;
+            equal      : OUT std_logic ;
             greater_a  : OUT std_logic ;
             a_negative : OUT std_logic ;
             b_negative : OUT std_logic
