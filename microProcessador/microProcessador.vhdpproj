@@ -2,12 +2,13 @@
   <ItemGroup>
     <File Include="multiplex8x1.vhd" />
     <File Include="multiplex8x1_testbench.vhd" />
-    <File Include="reg_bank.vhd" />
     <File Include="reg_16_bits.vhd" />
+    <File Include="reg_bank.vhd" />
+    <File Include="reg_bank_testbench.vhd" />
     <File Include="ula.vhd" />
     <File Include="ula_testbench.vhd" />
   </ItemGroup>
   <PropertyGroup>
-    <HardwareStartPath>ula.vhd</HardwareStartPath>
+    <HardwareStartPath>reg_bank.vhd</HardwareStartPath>
   </PropertyGroup>
 </Project>

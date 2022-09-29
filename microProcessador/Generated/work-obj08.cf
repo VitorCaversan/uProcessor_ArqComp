@@ -1,0 +1,10 @@
+v 4
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/reg_bank.vhd" "035a4b11b83c5323fd10df1ef499aa5311e75607" "20220929214929.711":
+  entity reg_bank at 9( 267) + 0 on 31;
+  architecture rtl of reg_bank at 24( 681) + 0 on 32;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/reg_16_bits.vhd" "b52f064696427863cb08719ebaabe002365eed50" "20220929214929.688":
+  entity reg_16_bits at 1( 0) + 0 on 29;
+  architecture rtl of reg_16_bits at 14( 299) + 0 on 30;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/reg_bank_testbench.vhd" "20a92373cb91aa7a045016318606490e70b98911" "20220929214929.729":
+  entity reg_bank_testbench at 1( 0) + 0 on 33;
+  architecture rtl of reg_bank_testbench at 8( 131) + 0 on 34;

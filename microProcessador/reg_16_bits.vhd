@@ -5,7 +5,7 @@ use IEEE.numeric_std.all;
 entity reg_16_bits is
     port
     (
-        data_in:                 in unsigned (15 downto 0);
+        data_in:              in unsigned (15 downto 0);
         clk, reset, write_en: in std_logic;
         data_out:             out unsigned (15 downto 0)  
     );
