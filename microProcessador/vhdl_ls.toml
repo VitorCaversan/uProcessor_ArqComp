@@ -6,6 +6,8 @@ work.files = [
 	'reg_16_bits.vhd',
 	'reg_bank.vhd',
 	'reg_bank_testbench.vhd',
+	'uProcessor.vhd',
+	'uProcessor_testbench.vhd',
 	'ula.vhd',
 	'ula_testbench.vhd'
 ]
@@ -16,6 +18,8 @@ files = [
 	'reg_16_bits.vhd',
 	'reg_bank.vhd',
 	'reg_bank_testbench.vhd',
+	'uProcessor.vhd',
+	'uProcessor_testbench.vhd',
 	'ula.vhd',
 	'ula_testbench.vhd'
 ]

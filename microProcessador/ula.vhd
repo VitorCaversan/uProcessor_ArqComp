@@ -7,6 +7,7 @@ entity ula is
       a,b:             in  unsigned(15 downto 0);
       selec:           in  unsigned(1 downto 0);
       output:          out unsigned(15 downto 0);
+      output2:         out unsigned(15 downto 0);
       equal, greater_a, a_negative, b_negative: out std_logic
    );
 end entity;
@@ -18,6 +19,8 @@ architecture rtl of ula is
                 a(15 downto 8) & b(7 downto 0) when selec="10" else -- Concatenates aMSB & bLSB
                 b(15 downto 8) & a(7 downto 0) when selec="11" else -- Concatenates bMSB & aLSB
                 "0000000000000000";
+    
+      output2 <= output;
 
       equal <= '1' when a=b else
                '0';

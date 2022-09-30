@@ -5,10 +5,12 @@
     <File Include="reg_16_bits.vhd" />
     <File Include="reg_bank.vhd" />
     <File Include="reg_bank_testbench.vhd" />
+    <File Include="uProcessor.vhd" />
+    <File Include="uProcessor_testbench.vhd" />
     <File Include="ula.vhd" />
     <File Include="ula_testbench.vhd" />
   </ItemGroup>
   <PropertyGroup>
-    <HardwareStartPath>reg_bank.vhd</HardwareStartPath>
+    <HardwareStartPath>uProcessor.vhd</HardwareStartPath>
   </PropertyGroup>
 </Project>

@@ -66,7 +66,7 @@ begin
                   data_out_7 when selec_reg_b = "111" else
                   "0000000000000000";
 
-    write_en_0 <= '0'; -- Allways connected to GND
+    write_en_0 <= '0'; -- Always connected to GND
     write_en_1 <= write_en when selec_reg_write = "001" else '0';
     write_en_2 <= write_en when selec_reg_write = "010" else '0';
     write_en_3 <= write_en when selec_reg_write = "011" else '0';
