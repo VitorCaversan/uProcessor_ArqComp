@@ -173,7 +173,7 @@ begin
         ula_src_b <= "11";
         selec_reg_a <= "001";
         selec_reg_b <= "010";
-        selec_reg_write <= "010"
+        selec_reg_write <= "010";
         write_reg_en <= '1';
         wait for 2*time_period;
         -- Shift_right_2_b e CONCATENATE bMSB&aLSB dos registradores 6 e 7, guarda no 7

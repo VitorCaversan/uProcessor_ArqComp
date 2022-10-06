@@ -5,6 +5,7 @@
     <File Include="reg_16_bits.vhd" />
     <File Include="reg_bank.vhd" />
     <File Include="reg_bank_testbench.vhd" />
+    <File Include="rom.vhd" />
     <File Include="uProcessor.vhd" />
     <File Include="uProcessor_testbench.vhd" />
     <File Include="ula.vhd" />
