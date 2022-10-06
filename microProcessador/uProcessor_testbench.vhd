@@ -152,6 +152,38 @@ begin
         selec_reg_write <= "010";
         write_reg_en <= '1';
         wait for 2*time_period;
+        -- Shift_left_2_b e soma os registradores 5 e 7, guarda no 5
+        selec_ula_action <= "00";
+        ula_src_b <= "10";
+        selec_reg_a <= "101";
+        selec_reg_b <= "111";
+        selec_reg_write <= "101";
+        write_reg_en <= '1';
+        wait for 2*time_period;
+        -- Shift_left_2_b e subtrai os registradores 4 e 3, guarda no 4
+        selec_ula_action <= "01";
+        ula_src_b <= "10";
+        selec_reg_a <= "100";
+        selec_reg_b <= "111";
+        selec_reg_write <= "100";
+        write_reg_en <= '1';
+        wait for 2*time_period;
+        -- Shift_right_2_b e Concatenates aMSB & bLSB dos registradores 1 e 2, guarda no 2
+        selec_ula_action <= "10";
+        ula_src_b <= "11";
+        selec_reg_a <= "001";
+        selec_reg_b <= "010";
+        selec_reg_write <= "010"
+        write_reg_en <= '1';
+        wait for 2*time_period;
+        -- Shift_right_2_b e CONCATENATE bMSB&aLSB dos registradores 6 e 7, guarda no 7
+        selec_ula_action <= "11";
+        ula_src_b <= "11";
+        selec_reg_a <= "110";
+        selec_reg_b <= "111";
+        selec_reg_write <= "111";
+        write_reg_en <= '1';
+        wait for 2*time_period;
         write_reg_en <= '0';
         wait;
     end process;

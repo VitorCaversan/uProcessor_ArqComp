@@ -54,8 +54,10 @@ begin
     
     output_ula <= output_ula_sig;
     
-    src_b_mux_output <= reg_data_b_sig     when ula_src_b = "00" else
-                        "0000000000000100" when ula_src_b = "01" else
+    src_b_mux_output <= reg_data_b_sig                        when ula_src_b = "00" else
+                        "0000000000000100"                    when ula_src_b = "01" else
+                        shift_left(unsigned(reg_data_b_sig), 2)  when ula_src_b = "10" else
+                        shift_right(unsigned(reg_data_b_sig), 2) when ula_src_b = "11" else
                         "0000000000000000";
     
 end architecture rtl;
