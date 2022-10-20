@@ -1,0 +1,57 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Thu Oct  6 22:31:26 2022
+[*]
+[dumpfile] "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/uProcessor_testbench.vcd"
+[dumpfile_mtime] "Thu Oct  6 19:14:49 2022"
+[dumpfile_size] 874398
+[savefile] "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/testBenches/ulaAndRegBankTestBench.gtkw"
+[timestart] 0
+[size] 1848 1016
+[pos] -39 -39
+*-7.181108 151 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] uprocessor_testbench.
+[treeopen] uprocessor_testbench.uut.
+[treeopen] uprocessor_testbench.uut.register_bank.
+[sst_width] 233
+[signals_width] 216
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@28
+uprocessor_testbench.clk
+[color] 6
+uprocessor_testbench.selec_reg_a[2:0]
+[color] 6
+uprocessor_testbench.selec_reg_b[2:0]
+@22
+uprocessor_testbench.uut.arithmetic_lu.a[15:0]
+uprocessor_testbench.uut.arithmetic_lu.b[15:0]
+uprocessor_testbench.output_ula[15:0]
+@28
+[color] 6
+uprocessor_testbench.selec_reg_write[2:0]
+[color] 6
+uprocessor_testbench.selec_ula_action[1:0]
+[color] 6
+uprocessor_testbench.ula_src_b[1:0]
+@22
+[color] 2
+uprocessor_testbench.uut.register_bank.data_out_0[15:0]
+[color] 2
+uprocessor_testbench.uut.register_bank.data_out_1[15:0]
+[color] 2
+uprocessor_testbench.uut.register_bank.data_out_2[15:0]
+[color] 2
+uprocessor_testbench.uut.register_bank.data_out_3[15:0]
+[color] 2
+uprocessor_testbench.uut.register_bank.data_out_4[15:0]
+[color] 2
+uprocessor_testbench.uut.register_bank.data_out_5[15:0]
+[color] 2
+uprocessor_testbench.uut.register_bank.data_out_6[15:0]
+[color] 2
+uprocessor_testbench.uut.register_bank.data_out_7[15:0]
+@28
+uprocessor_testbench.uut.register_bank.write_en
+[pattern_trace] 1
+[pattern_trace] 0
