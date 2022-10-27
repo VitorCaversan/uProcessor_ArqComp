@@ -5,56 +5,44 @@ use IEEE.numeric_std.all;
 entity control_unit is
     port
     (
-        clk, reset : in std_logic;
-        data_out_cu: out unsigned (15 downto 0)
+        opcode:            in unsigned (2 downto 0);
+        clk, reset:        in std_logic;
+        pc_source:         out std_logic; -- +1 or jump
+        rom_read_en:       out std_logic;
+        reg_inst_read_en:  out std_logic;
+        reg_read_en:       out std_logic;
+        reg_write_en:      out std_logic;
+        alu_operation:     out unsigned(1 downto 0)
     );
-end entity;
+end entity control_unit;
 
 architecture rtl of control_unit is
-    component program_counter is
-        port
-        (
-            data_in:                   in unsigned (15 downto 0);
-            clk, write_en, reset:      in std_logic;
-            data_out:                  out unsigned (15 downto 0)
-        );
-    end component;
-
-    component count_one is
-        port
-        (
-            data_pc:  in unsigned (15 downto 0);
-            clk:      in std_logic;
-            data_out: out unsigned (15 downto 0)
-        );
-    end component;
-
-    component rom is
-        port
-        (
-            clk: in std_logic;
-            address: in unsigned(15 downto 0);
-            data_out: out unsigned(19 downto 0)
-        );
-    end component;
-
-    component state_machine is
+    component state_machine is 
         port
         (
             clk, reset: in std_logic;
-            output    : out std_logic
+            output    : out unsigned (1 downto 0)
         );
     end component;
-
-    signal data_out_rom_sig:       unsigned (19 downto 0);
-    signal opcode_sig:             unsigned (3 downto 0);
-    signal data_out_adress_sig:    unsigned (15 downto 0);
-    signal data_out_count_one_sig: unsigned (15 downto 0);
-    signal data_out_pc:            unsigned (15 downto 0);
-    signal output_state_sig:       std_logic;
-    signal clk_count_one_rom_sig:  std_logic;
-
+    
+    signal output_stt_machine_sig: unsigned (1 downto 0);
+    
 begin
-
+    stt_machine: state_machine port map (clk => clk, reset => reset, output => output_stt_machine_sig);
+    
+    pc_source        <= '0' when opcode = "111" else
+                        '1';
+    rom_read_en      <= '1' when output_stt_machine_sig = "00" else
+                        '0';
+    reg_inst_read_en <= '1' when output_stt_machine_sig = "01" else
+                        '0';
+    reg_read_en      <= '1' when output_stt_machine_sig = "10" else
+                        '0';
+    reg_write_en     <= '0' when opcode = "111" else
+                        '1';
+    alu_operation    <= "00" when opcode = "000" else
+                        "10" when opcode = "111" else
+                        "01"; -- opcodes
+    
 
 end architecture rtl;

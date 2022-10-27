@@ -4,10 +4,10 @@ use IEEE.numeric_std.all;
 
 entity ula is
    port(
-      a,b:             in  unsigned(15 downto 0);
+      a,b:             in  unsigned(14 downto 0);
       selec:           in  unsigned(1 downto 0);
-      output:          out unsigned(15 downto 0);
-      output2:         out unsigned(15 downto 0);
+      output:          out unsigned(14 downto 0);
+      output2:         out unsigned(14 downto 0);
       equal, greater_a, a_negative, b_negative: out std_logic
    );
 end entity;
@@ -16,10 +16,10 @@ architecture rtl of ula is
    begin
       output <= a+b when selec="00"                            else
                 a-b when selec="01"                            else
-                a(15 downto 8) & b(7 downto 0) when selec="10" else -- Concatenates aMSB & bLSB
-                b(15 downto 8) & a(7 downto 0) when selec="11" else -- Concatenates bMSB & aLSB
-                "0000000000000000";
-    
+                a(14 downto 8) & b(7 downto 0) when selec="10" else -- Concatenates aMSB & bLSB
+                b(14 downto 8) & a(7 downto 0) when selec="11" else -- Concatenates bMSB & aLSB
+                "000000000000000";
+   
       output2 <= output;
 
       equal <= '1' when a=b else
@@ -27,6 +27,6 @@ architecture rtl of ula is
       greater_a <= '1' when a>b else
                    '0';
                    
-      a_negative <= a(15);
-      b_negative <= b(15);
+      a_negative <= a(14);
+      b_negative <= b(14);
 end architecture rtl;

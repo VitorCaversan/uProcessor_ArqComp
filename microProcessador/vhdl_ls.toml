@@ -3,6 +3,8 @@
 work.files = [
 	'control_unit.vhd',
 	'count_one.vhd',
+	'lab4_top_level.vhd',
+	'lab4_top_level_testbench.vhd',
 	'multiplex8x1.vhd',
 	'multiplex8x1_testbench.vhd',
 	'pc_count_one.vhd',
@@ -26,6 +28,8 @@ work.files = [
 files = [
 	'control_unit.vhd',
 	'count_one.vhd',
+	'lab4_top_level.vhd',
+	'lab4_top_level_testbench.vhd',
 	'multiplex8x1.vhd',
 	'multiplex8x1_testbench.vhd',
 	'pc_count_one.vhd',
