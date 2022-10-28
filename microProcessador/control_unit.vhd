@@ -8,10 +8,10 @@ entity control_unit is
         opcode:            in unsigned (2 downto 0);
         clk, reset:        in std_logic;
         pc_source:         out std_logic; -- +1 or jump
-        rom_read_en:       out std_logic;
-        reg_inst_read_en:  out std_logic;
-        reg_read_en:       out std_logic;
+        pc_write_en:       out std_logic;
+        reg_inst_write_en: out std_logic;
         reg_write_en:      out std_logic;
+        ula_src_b:         out std_logic;
         alu_operation:     out unsigned(1 downto 0)
     );
 end entity control_unit;
@@ -32,13 +32,13 @@ begin
     
     pc_source        <= '0' when opcode = "111" else
                         '1';
-    rom_read_en      <= '1' when output_stt_machine_sig = "00" else
+    pc_write_en      <= '1' when output_stt_machine_sig = "00" else
                         '0';
-    reg_inst_read_en <= '1' when output_stt_machine_sig = "01" else
+    reg_inst_write_en<= '1' when output_stt_machine_sig = "00" else
                         '0';
-    reg_read_en      <= '1' when output_stt_machine_sig = "10" else
+    reg_write_en     <= '1' when opcode /= "111" and output_stt_machine_sig = "10" else
                         '0';
-    reg_write_en     <= '0' when opcode = "111" else
+    ula_src_b        <= '0' when opcode = "000" else
                         '1';
     alu_operation    <= "00" when opcode = "000" else
                         "10" when opcode = "111" else

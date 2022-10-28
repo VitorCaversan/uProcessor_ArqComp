@@ -5,13 +5,13 @@ use IEEE.numeric_std.all;
 entity rom is
     port(
         clk: in std_logic;
-        address: in unsigned(11 downto 0);
+        address: in unsigned(6 downto 0);
         data_out: out unsigned(14 downto 0)
     );
 end entity rom;
 
 architecture rtl of rom is
-    type mem is array (0 to 4095) of unsigned(14 downto 0);
+    type mem is array (0 to 127) of unsigned(14 downto 0);
     constant data_rom: mem := (
         0 => "000_000011011110",
         1 => "000_000011110000",
