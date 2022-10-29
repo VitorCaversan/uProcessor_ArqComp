@@ -85,25 +85,25 @@ architecture rtl of uProcessor_lab5 is
 
     signal rom_data_out_sig:                unsigned(14 downto 0);
     signal inst_reg_data_out_sig:           unsigned(14 downto 0);
-    signal inst_reg_data_out_6_0_sig:       unsigned(6 downto 0);
-    signal inst_reg_immediate:              unsigned(11 downto 0);
-    signal inst_reg_opcode:                 unsigned(2 downto 0);
-    signal inst_reg_funct:                  unsigned(2 downto 0);
-    signal inst_reg_write_en_sig:           std_logic;
+    signal inst_reg_J_immediate_sig:        unsigned(6 downto 0);
+    signal inst_reg_I_immediate_sig:        unsigned(5 downto 0);
+    signal inst_reg_opcode_sig:             unsigned(2 downto 0);
+    signal inst_reg_funct_sig:              unsigned(2 downto 0);
+    signal inst_reg_write_en_sig:           std_logic; -- Comes from CU
     signal pc_data_in_sig, pc_data_out_sig: unsigned(6 downto 0);
-    signal pc_source_sig:                   std_logic;
-    signal pc_write_en_sig:                 std_logic;
+    signal pc_source_sig:                   std_logic; -- Comes from CU
+    signal pc_write_en_sig:                 std_logic; -- Comes from CU
     signal reg_bank_selec_reg_a_sig:        unsigned(2 downto 0);
     signal reg_bank_selec_reg_b_sig:        unsigned(2 downto 0);
     signal reg_bank_selec_reg_write_sig:    unsigned(2 downto 0);
-    signal reg_bank_write_en_sig:           std_logic;
+    signal reg_bank_write_en_sig:           std_logic; -- Comes from CU
     signal reg_bank_data_a_sig:             unsigned(14 downto 0);
     signal reg_bank_data_b_sig:             unsigned(14 downto 0);
     signal ula_output_sig, ula_output_sig2: unsigned(14 downto 0);
-    signal ula_src_b_sig:                   std_logic;
+    signal ula_src_b_sig:                   std_logic; -- Comes from CU
     signal ula_data_in_b_sig:                 unsigned(14 downto 0);
     signal ula_operation_sig:               unsigned(1 downto 0);
-    signal cu_ula_operation_sig:            unsigned(1 downto 0);
+    signal cu_ula_operation_sig:            unsigned(1 downto 0); -- Comes from CU: 00 for R, 01 for I, 10 for J.
 begin
     
     inst_register: reg_15_bits port map
@@ -144,7 +144,7 @@ begin
 
     cu: control_unit port map
                             (
-                                opcode            => inst_reg_opcode,
+                                opcode            => inst_reg_opcode_sig,
                                 clk               => clk, 
                                 reset             => reset,     
                                 pc_source         => pc_source_sig,
@@ -166,20 +166,28 @@ begin
 
 
     pc_data_in_sig <= (pc_data_out_sig + "0000001") when pc_source_sig = '1' else
-                       inst_reg_data_out_6_0_sig;
+                       inst_reg_J_immediate_sig;
 
-    inst_reg_opcode           <= inst_reg_data_out_sig (14 downto 12);
-    inst_reg_funct            <= inst_reg_data_out_sig (2 downto 0);
-    inst_reg_data_out_6_0_sig <= inst_reg_data_out_sig (6 downto 0);
-    inst_reg_immediate        <= inst_reg_data_out_sig(11) & inst_reg_data_out_sig(11) & inst_reg_data_out_sig(11) & inst_reg_data_out_sig (11 downto 0);
+    inst_reg_opcode_sig      <= inst_reg_data_out_sig (14 downto 12);
+    inst_reg_funct_sig       <= inst_reg_data_out_sig (2 downto 0);
+    inst_reg_J_immediate_sig <= inst_reg_data_out_sig (6 downto 0);
+    inst_reg_I_immediate_sig <=   inst_reg_data_out_sig(5) & inst_reg_data_out_sig(5) -- Expands the value with the immediate's MSB
+                                & inst_reg_data_out_sig(5) & inst_reg_data_out_sig(5)
+                                & inst_reg_data_out_sig(5) & inst_reg_data_out_sig(5)
+                                & inst_reg_data_out_sig(5) & inst_reg_data_out_sig(5)
+                                & inst_reg_data_out_sig(5) & inst_reg_data_out_sig (5 downto 0);
 
     -- Parses instruction's bits to select registers
-    reg_bank_selec_reg_a_sig <= inst_reg_data_out_sig (11 downto 9);
+    reg_bank_selec_reg_a_sig <= inst_reg_data_out_sig (11 downto 9) when cu_ula_operation_sig = "00" else
+                                inst_reg_data_out_sig (8 downto 6);
     reg_bank_selec_reg_b_sig <= inst_reg_data_out_sig (8 downto 6);
-    reg_bank_selec_reg_write_sig <= inst_reg_data_out_sig (5 downto 3);
+    reg_bank_selec_reg_write_sig <= inst_reg_data_out_sig (5 downto 3) when cu_ula_operation_sig = "00" else
+                                    inst_reg_data_out_sig (11 downto 9);
 
-    ula_data_in_b_sig <= inst_reg_immediate when ula_src_b_sig = '0' else
-                         reg_bank_data_b_sig;
+    ula_data_in_b_sig <= inst_reg_I_immediate_sig when ula_src_b_sig = '0' else
+                         reg_bank_data_b_sig; -- Chooses what will go to ALU's data_in b
 
-    ula_operation_sig <= '0'; -- Aqui onde colocamos o que cada instrucao vai fazer, opcode junto com function
+    ula_operation_sig <= "01" when (cu_ula_operation_sig = "00" and inst_reg_funct_sig = "010") else
+                         "10" when (cu_ula_operation_sig = "00" and inst_reg_funct_sig = "011") else
+                         "00"; -- What the ALU does
 end architecture rtl;
