@@ -5,14 +5,15 @@ use IEEE.numeric_std.all;
 entity control_unit is
     port
     (
-        opcode:            in unsigned (2 downto 0);
-        clk, reset:        in std_logic;
-        pc_source:         out std_logic; -- +1 or jump
-        pc_write_en:       out std_logic;
-        reg_inst_write_en: out std_logic;
-        reg_write_en:      out std_logic;
-        ula_src_b:         out std_logic;
-        alu_operation:     out unsigned(1 downto 0)
+        opcode:             in unsigned (2 downto 0);
+        clk, reset:         in std_logic;
+        output_stt_machine: out unsigned(1 downto 0);
+        pc_source:          out std_logic; -- +1 or jump
+        pc_write_en:        out std_logic;
+        reg_inst_write_en:  out std_logic;
+        reg_write_en:       out std_logic;
+        ula_src_b:          out std_logic;
+        alu_operation:      out unsigned(1 downto 0)
     );
 end entity control_unit;
 
@@ -30,6 +31,7 @@ architecture rtl of control_unit is
 begin
     stt_machine: state_machine port map (clk => clk, reset => reset, output => output_stt_machine_sig);
     
+    output_stt_machine <= output_stt_machine_sig;
     pc_source        <= '0' when opcode = "111" else
                         '1';
     pc_write_en      <= '1' when output_stt_machine_sig = "00" else

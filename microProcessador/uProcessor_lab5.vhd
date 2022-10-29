@@ -4,7 +4,12 @@ use IEEE.numeric_std.all;
 
 entity uProcessor_lab5 is
     port(
-        clk, reset: in std_logic
+        clk, reset : in std_logic;
+        state      : out unsigned (1 downto 0);
+        progamC    : out unsigned (6 downto 0);
+        instruction: out unsigned (14 downto 0);
+        regA_data, regB_data : out unsigned (14 downto 0);
+        alu_output  : out unsigned (14 downto 0)
     );
 end entity uProcessor_lab5;
 
@@ -101,9 +106,10 @@ architecture rtl of uProcessor_lab5 is
     signal reg_bank_data_b_sig:             unsigned(14 downto 0);
     signal ula_output_sig, ula_output_sig2: unsigned(14 downto 0);
     signal ula_src_b_sig:                   std_logic; -- Comes from CU
-    signal ula_data_in_b_sig:                 unsigned(14 downto 0);
+    signal ula_data_in_b_sig:               unsigned(14 downto 0);
     signal ula_operation_sig:               unsigned(1 downto 0);
     signal cu_ula_operation_sig:            unsigned(1 downto 0); -- Comes from CU: 00 for R, 01 for I, 10 for J.
+    signal state_sig:                       unsigned(1 downto 0);
 begin
     
     inst_register: reg_15_bits port map
@@ -144,15 +150,16 @@ begin
 
     cu: control_unit port map
                             (
-                                opcode            => inst_reg_opcode_sig,
-                                clk               => clk, 
-                                reset             => reset,     
-                                pc_source         => pc_source_sig,
-                                pc_write_en       => pc_write_en_sig,
-                                reg_inst_write_en => inst_reg_write_en_sig,
-                                reg_write_en      => reg_bank_write_en_sig,
-                                ula_src_b         => ula_src_b_sig,
-                                alu_operation     => cu_ula_operation_sig
+                                opcode             => inst_reg_opcode_sig,
+                                clk                => clk, 
+                                reset              => reset,
+                                output_stt_machine => state_sig,
+                                pc_source          => pc_source_sig,
+                                pc_write_en        => pc_write_en_sig,
+                                reg_inst_write_en  => inst_reg_write_en_sig,
+                                reg_write_en       => reg_bank_write_en_sig,
+                                ula_src_b          => ula_src_b_sig,
+                                alu_operation      => cu_ula_operation_sig
                             );
 
     alu: ula port map
@@ -190,4 +197,12 @@ begin
     ula_operation_sig <= "01" when (cu_ula_operation_sig = "00" and inst_reg_funct_sig = "010") else
                          "10" when (cu_ula_operation_sig = "00" and inst_reg_funct_sig = "011") else
                          "00"; -- What the ALU does
+
+    -- Top level outputs
+    state       <= state_sig;
+    progamC     <= pc_data_out_sig;
+    instruction <= inst_reg_data_out_sig;
+    regA_data   <= reg_bank_data_a_sig;
+    regB_data   <= reg_bank_data_b_sig;
+    alu_output  <= ula_output_sig;
 end architecture rtl;

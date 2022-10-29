@@ -10,6 +10,7 @@
     <File Include="pc_count_one_testbench.vhd" />
     <File Include="pc_rom.vhd" />
     <File Include="pc_rom_testbench.vhd" />
+    <File Include="processador_tb.vhd" />
     <File Include="program_counter.vhd" />
     <File Include="reg_15_bits.vhd" />
     <File Include="reg_bank.vhd" />
