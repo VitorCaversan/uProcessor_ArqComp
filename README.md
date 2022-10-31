@@ -1,6 +1,8 @@
 # uProcessor_ArqComp
 
-Making a micro processor from scratch using vhdl language
+Making a micro processor from scratch using vhdl language.
+Authors: João Vitor Caversan dos Passos and Leonardo Bueno Fischer.
+Contact: joaopassos@alunos.utfpr.edu.br
 
 ## Making the first ALU - Arithmetic Logic Unit
 

@@ -1,0 +1,37 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Mon Oct 31 00:26:11 2022
+[*]
+[dumpfile] "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/processador_tb.vcd"
+[dumpfile_mtime] "Mon Oct 31 00:09:17 2022"
+[dumpfile_size] 4535851
+[savefile] "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/testBenches/uprocessor_lab5.gtkw"
+[timestart] 0
+[size] 1848 1016
+[pos] -51 -51
+*-7.040295 88 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] processador_tb.
+[treeopen] processador_tb.uut.
+[sst_width] 233
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@28
+processador_tb.reset
+processador_tb.clk
+@22
+[color] 2
+processador_tb.instruction[14:0]
+[color] 2
+processador_tb.programc[6:0]
+[color] 6
+processador_tb.rega_data[14:0]
+[color] 6
+processador_tb.regb_data[14:0]
+processador_tb.uut.alu.a[14:0]
+@23
+processador_tb.uut.alu.b[14:0]
+@28
+processador_tb.state[1:0]
+[pattern_trace] 1
+[pattern_trace] 0

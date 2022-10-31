@@ -45,6 +45,5 @@ begin
     alu_operation    <= "00" when opcode = "000" else
                         "10" when opcode = "111" else
                         "01"; -- opcodes
-    
 
 end architecture rtl;

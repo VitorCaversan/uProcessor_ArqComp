@@ -26,6 +26,6 @@
     <File Include="ula_testbench.vhd" />
   </ItemGroup>
   <PropertyGroup>
-    <HardwareStartPath>lab4_top_level.vhd</HardwareStartPath>
+    <HardwareStartPath>uProcessor_lab5.vhd</HardwareStartPath>
   </PropertyGroup>
 </Project>

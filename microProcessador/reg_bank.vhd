@@ -22,7 +22,7 @@ entity reg_bank is
 end entity;
 
 architecture rtl of reg_bank is
-    component reg_16_bits is
+    component reg_15_bits is
         port
         (
             data_in  : IN unsigned (14 downto 0);
@@ -37,14 +37,14 @@ architecture rtl of reg_bank is
     signal write_en_0, write_en_1, write_en_2, write_en_3, write_en_4, write_en_5, write_en_6, write_en_7: std_logic;
     
 begin
-    reg_0: reg_16_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_0, data_out=>data_out_0);
-    reg_1: reg_16_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_1, data_out=>data_out_1);
-    reg_2: reg_16_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_2, data_out=>data_out_2);
-    reg_3: reg_16_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_3, data_out=>data_out_3);
-    reg_4: reg_16_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_4, data_out=>data_out_4);
-    reg_5: reg_16_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_5, data_out=>data_out_5);
-    reg_6: reg_16_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_6, data_out=>data_out_6);
-    reg_7: reg_16_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_7, data_out=>data_out_7);
+    reg_0: reg_15_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_0, data_out=>data_out_0);
+    reg_1: reg_15_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_1, data_out=>data_out_1);
+    reg_2: reg_15_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_2, data_out=>data_out_2);
+    reg_3: reg_15_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_3, data_out=>data_out_3);
+    reg_4: reg_15_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_4, data_out=>data_out_4);
+    reg_5: reg_15_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_5, data_out=>data_out_5);
+    reg_6: reg_15_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_6, data_out=>data_out_6);
+    reg_7: reg_15_bits port map(data_in=>data_in, clk=>clk, reset=>reset, write_en=>write_en_7, data_out=>data_out_7);
     
     reg_data_a <= data_out_0 when selec_reg_a = "000" else
                   data_out_1 when selec_reg_a = "001" else

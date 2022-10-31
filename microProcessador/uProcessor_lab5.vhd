@@ -46,7 +46,7 @@ architecture rtl of uProcessor_lab5 is
             a          : IN unsigned (14 downto 0);
             b          : IN unsigned (14 downto 0);
             selec      : IN unsigned (1 downto 0);
-            output     : OUT unsigned (14 downto 0);
+            output1     : OUT unsigned (14 downto 0);
             output2    : out unsigned(14 downto 0);
             equal      : OUT std_logic ;
             greater_a  : OUT std_logic ;
@@ -58,9 +58,9 @@ architecture rtl of uProcessor_lab5 is
     component program_counter is
         port
         (
-            data_in:                   in unsigned (11 downto 0);
+            data_in:                   in unsigned (6 downto 0);
             clk, write_en, reset:      in std_logic;
-            data_out:                  out unsigned (11 downto 0)
+            data_out:                  out unsigned (6 downto 0)
         );
     end component;
     
@@ -68,7 +68,7 @@ architecture rtl of uProcessor_lab5 is
         port
         (
             clk      : IN std_logic ;
-            address  : IN unsigned (11 downto 0);
+            address  : IN unsigned (6 downto 0);
             data_out : OUT unsigned (14 downto 0)
         );
     end component;
@@ -76,22 +76,22 @@ architecture rtl of uProcessor_lab5 is
     component control_unit is
         port
         (
-            opcode           : IN unsigned (2 downto 0);
-            clk              : IN std_logic ;
-            reset            : IN std_logic ;
-            pc_source        : OUT std_logic ;
-            rom_read_en      : OUT std_logic ;
-            reg_inst_read_en : OUT std_logic ;
-            reg_read_en      : OUT std_logic ;
-            reg_write_en     : OUT std_logic ;
-            alu_operation    : OUT unsigned (1 downto 0)
+            opcode:             in unsigned (2 downto 0);
+            clk, reset:         in std_logic;
+            output_stt_machine: out unsigned(1 downto 0);
+            pc_source:          out std_logic; -- +1 or jump
+            pc_write_en:        out std_logic;
+            reg_inst_write_en:  out std_logic;
+            reg_write_en:       out std_logic;
+            ula_src_b:          out std_logic;
+            alu_operation:      out unsigned(1 downto 0)
         );
     end component;
 
     signal rom_data_out_sig:                unsigned(14 downto 0);
     signal inst_reg_data_out_sig:           unsigned(14 downto 0);
     signal inst_reg_J_immediate_sig:        unsigned(6 downto 0);
-    signal inst_reg_I_immediate_sig:        unsigned(5 downto 0);
+    signal inst_reg_I_immediate_sig:        unsigned(14 downto 0);
     signal inst_reg_opcode_sig:             unsigned(2 downto 0);
     signal inst_reg_funct_sig:              unsigned(2 downto 0);
     signal inst_reg_write_en_sig:           std_logic; -- Comes from CU
@@ -167,7 +167,7 @@ begin
                         a       => reg_bank_data_a_sig,
                         b       => ula_data_in_b_sig,
                         selec   => ula_operation_sig,
-                        output  => ula_output_sig,
+                        output1  => ula_output_sig,
                         output2 => ula_output_sig2
                     );
 
@@ -178,11 +178,8 @@ begin
     inst_reg_opcode_sig      <= inst_reg_data_out_sig (14 downto 12);
     inst_reg_funct_sig       <= inst_reg_data_out_sig (2 downto 0);
     inst_reg_J_immediate_sig <= inst_reg_data_out_sig (6 downto 0);
-    inst_reg_I_immediate_sig <=   inst_reg_data_out_sig(5) & inst_reg_data_out_sig(5) -- Expands the value with the immediate's MSB
-                                & inst_reg_data_out_sig(5) & inst_reg_data_out_sig(5)
-                                & inst_reg_data_out_sig(5) & inst_reg_data_out_sig(5)
-                                & inst_reg_data_out_sig(5) & inst_reg_data_out_sig(5)
-                                & inst_reg_data_out_sig(5) & inst_reg_data_out_sig (5 downto 0);
+    inst_reg_I_immediate_sig <= "111111111" & inst_reg_data_out_sig (5 downto 0) when inst_reg_data_out_sig(5) = '1' else
+                                "000000000" & inst_reg_data_out_sig (5 downto 0);
 
     -- Parses instruction's bits to select registers
     reg_bank_selec_reg_a_sig <= inst_reg_data_out_sig (11 downto 9) when cu_ula_operation_sig = "00" else
@@ -191,7 +188,7 @@ begin
     reg_bank_selec_reg_write_sig <= inst_reg_data_out_sig (5 downto 3) when cu_ula_operation_sig = "00" else
                                     inst_reg_data_out_sig (11 downto 9);
 
-    ula_data_in_b_sig <= inst_reg_I_immediate_sig when ula_src_b_sig = '0' else
+    ula_data_in_b_sig <= inst_reg_I_immediate_sig when ula_src_b_sig = '1' else
                          reg_bank_data_b_sig; -- Chooses what will go to ALU's data_in b
 
     ula_operation_sig <= "01" when (cu_ula_operation_sig = "00" and inst_reg_funct_sig = "010") else
