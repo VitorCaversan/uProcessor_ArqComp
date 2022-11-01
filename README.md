@@ -70,19 +70,28 @@ what was done, so you'll have to trust the creators that it simply works.
  - PC: 7 bits width (there are only 128 memory slots in the ROM at this time).
 
 ### Instructions coded:
+
+Some meanings:
+
+ - rs: source register;
+ - rd: destination register;
+ - sm: shift amout, not used in this project;
+
 **Type R instructions:**
 
-| Instruction | Opcode |   rs   |   rt   |   rd   | Function |     Description     |
+| Instruction | Opcode |   rd   |   rs   |   sm   | Function |     Description     |
 |-------------|--------|--------|--------|--------|----------|---------------------|
-| add         | 000    | 3 bits | 3 bits | 3 bits | 001      | rd <= rs + rt       |
-| sub         | 000    | 3 bits | 3 bits | 3 bits | 010      | rd <= rs - rt       |
-| conc        | 000    | 3 bits | 3 bits | 3 bits | 011      | rd <= rsMSB & rtLSB |
+| add         | 000    | 3 bits | 3 bits | 3 bits | 001      | rd <= rd + rs       |
+| sub         | 000    | 3 bits | 3 bits | 3 bits | 010      | rd <= rd - rs       |
+| conc        | 000    | 3 bits | 3 bits | 3 bits | 011      | rd <= rdMSB & rsLSB |
+| move        | 000    | 3 bits | 3 bits | 3 bits | 100      | rd <= rs            |
 
 **Type I instructions:**
 
-| Instruction | Opcode |   rs   |   rt   | Immediate |     Description     |
-|-------------|--------|--------|--------|-----------|---------------------|
-| addi        | 001    | 3 bits | 3 bits | 6 bits    | rs <= rt + Immediate|
+| Instruction | Opcode |   rd   |  Immediate |     Description     |
+|-------------|--------|--------|------------|---------------------|
+| addi        | 001    | 3 bits |  9 bits    | rd <= rd + Immediate|
+| moveq       | 010    | 3 bits |  9 bits    | rd <= Immediate     |
 
 **Type J instructions:**
 

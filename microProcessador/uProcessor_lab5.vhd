@@ -106,6 +106,7 @@ architecture rtl of uProcessor_lab5 is
     signal reg_bank_data_b_sig:             unsigned(14 downto 0);
     signal ula_output_sig, ula_output_sig2: unsigned(14 downto 0);
     signal ula_src_b_sig:                   std_logic; -- Comes from CU
+    signal ula_data_in_a_sig:               unsigned(14 downto 0);
     signal ula_data_in_b_sig:               unsigned(14 downto 0);
     signal ula_operation_sig:               unsigned(1 downto 0);
     signal cu_ula_operation_sig:            unsigned(1 downto 0); -- Comes from CU: 00 for R, 01 for I, 10 for J.
@@ -164,7 +165,7 @@ begin
 
     alu: ula port map
                     (
-                        a       => reg_bank_data_a_sig,
+                        a       => ula_data_in_a_sig,
                         b       => ula_data_in_b_sig,
                         selec   => ula_operation_sig,
                         output1  => ula_output_sig,
@@ -178,16 +179,16 @@ begin
     inst_reg_opcode_sig      <= inst_reg_data_out_sig (14 downto 12);
     inst_reg_funct_sig       <= inst_reg_data_out_sig (2 downto 0);
     inst_reg_J_immediate_sig <= inst_reg_data_out_sig (6 downto 0);
-    inst_reg_I_immediate_sig <= "111111111" & inst_reg_data_out_sig (5 downto 0) when inst_reg_data_out_sig(5) = '1' else
-                                "000000000" & inst_reg_data_out_sig (5 downto 0);
+    inst_reg_I_immediate_sig <= "111111" & inst_reg_data_out_sig (8 downto 0) when inst_reg_data_out_sig(8) = '1' else
+                                "000000" & inst_reg_data_out_sig (8 downto 0);
 
     -- Parses instruction's bits to select registers
-    reg_bank_selec_reg_a_sig <= inst_reg_data_out_sig (11 downto 9) when cu_ula_operation_sig = "00" else
-                                inst_reg_data_out_sig (8 downto 6);
+    reg_bank_selec_reg_a_sig <= inst_reg_data_out_sig (11 downto 9);
     reg_bank_selec_reg_b_sig <= inst_reg_data_out_sig (8 downto 6);
-    reg_bank_selec_reg_write_sig <= inst_reg_data_out_sig (5 downto 3) when cu_ula_operation_sig = "00" else
-                                    inst_reg_data_out_sig (11 downto 9);
+    reg_bank_selec_reg_write_sig <= inst_reg_data_out_sig (11 downto 9);
 
+    ula_data_in_a_sig <= "000000000000000" when (inst_reg_opcode_sig = "010") or (inst_reg_opcode_sig = "000" and inst_reg_funct_sig = "100") else
+                        reg_bank_data_a_sig;
     ula_data_in_b_sig <= inst_reg_I_immediate_sig when ula_src_b_sig = '1' else
                          reg_bank_data_b_sig; -- Chooses what will go to ALU's data_in b
 
