@@ -83,7 +83,6 @@ Some meanings:
 |-------------|--------|--------|--------|--------|----------|---------------------|
 | add         | 000    | 3 bits | 3 bits | 3 bits | 001      | rd <= rd + rs       |
 | sub         | 000    | 3 bits | 3 bits | 3 bits | 010      | rd <= rd - rs       |
-| conc        | 000    | 3 bits | 3 bits | 3 bits | 011      | rd <= rdMSB & rsLSB |
 | move        | 000    | 3 bits | 3 bits | 3 bits | 100      | rd <= rs            |
 
 **Type I instructions:**
