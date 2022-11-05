@@ -76,6 +76,8 @@ Some meanings:
  - rs: source register;
  - rd: destination register;
  - sm: shift amout, not used in this project;
+ - cc: comparison condition 
+ - d : offset;
 
 **Type R instructions:**
 
@@ -87,13 +89,20 @@ Some meanings:
 
 **Type I instructions:**
 
-| Instruction | Opcode |   rd   |  Immediate |     Description     |
-|-------------|--------|--------|------------|---------------------|
-| addi        | 001    | 3 bits |  9 bits    | rd <= rd + Immediate|
-| moveq       | 010    | 3 bits |  9 bits    | rd <= Immediate     |
+| Instruction | Opcode |   rd   |  Immediate |         Description             |
+|-------------|--------|--------|------------|---------------------------------|
+| addi        | 001    | 3 bits |  9 bits    | rd <= rd + Immediate            |
+| moveq       | 010    | 3 bits |  9 bits    | rd <= Immediate                 |
 
 **Type J instructions:**
 
 | Instruction | Opcode |   Immediate   |             Description             |
 |-------------|--------|---------------|-------------------------------------|
 | jump        | 111    | 9 bits        | Jumps to the Immediate mem position |
+
+**Branch Instruction:**
+
+| Instruction | Opcode |   rd   |   cc   |     d     |              Description        |
+|-------------|--------|--------|--------|-----------|---------------------------------|
+| beq         | 100    | 3 bits | 3 bits |  6 bits   | if rd = cc then [PC] = [PC] + d |
+| bls         | 101    | 3 bits | 5 bits |  4 bits   | if rd < cc then [PC] = [PC] + d |
