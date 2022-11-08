@@ -46,7 +46,7 @@ architecture rtl of uProcessor_lab5 is
             a          : IN unsigned (14 downto 0);
             b          : IN unsigned (14 downto 0);
             selec      : IN unsigned (1 downto 0);
-            output1     : OUT unsigned (14 downto 0);
+            output1    : OUT unsigned (14 downto 0);
             output2    : out unsigned(14 downto 0);
             equal      : OUT std_logic ;
             greater_a  : OUT std_logic ;
@@ -54,6 +54,14 @@ architecture rtl of uProcessor_lab5 is
             b_negative : OUT std_logic
         );
     end component;
+
+    component flip_flop_d is
+        port
+        (
+            data_in:            in std_logic;
+            clk, reset: in std_logic;
+            data_out:           out std_logic
+        )
     
     component program_counter is
         port
@@ -112,7 +120,9 @@ architecture rtl of uProcessor_lab5 is
     signal ula_data_in_b_sig:               unsigned(14 downto 0);
     signal ula_operation_sig:               unsigned(1 downto 0);
     signal ula_equal_sig:                   std_logic;
-    signal ula_grater_a_sig:                std_logic;
+    signal ula_greater_a_sig:               std_logic;
+    signal flag_equal_sig:                  std_logic;
+    signal flag_greater_a_sig:              std_logic;
     signal cu_ula_operation_sig:            unsigned(1 downto 0); -- Comes from CU: 00 for R, 01 for I, 10 for J.
     signal state_sig:                       unsigned(1 downto 0);
 begin
@@ -175,13 +185,31 @@ begin
                         output1   => ula_output_sig,
                         output2   => ula_output_sig2,
                         equal     => ula_equal_sig,
-                        greater_a => ula_grater_a_sig
+                        greater_a => ula_greater_a_sig
                     );
+    flag_equal: flip_flop_d port map
+                                   (
+                                        data_in => ula_equal_sig,
+                                        clk => clk,
+                                        reset => reset,
+                                        data_out => flag_equal_sig
+                                         
+                                   );
+
+    flag_greater_a: flip_flop_d port map
+                                       (
+                                            data_in => ula_greater_a_sig,
+                                            clk => clk,
+                                            reset => reset,
+                                            data_out => flag_greater_a_sig
+                                       );
+                            
+                                
 
 
     pc_data_in_sig <= inst_reg_J_immediate_sig when pc_source_sig = "00" else -- absolute jump
-                      (pc_data_out_sig + inst_reg_J_immediate_sig) when pc_source_sig = "01" and ula_equal_sig = '1' else -- relative jump
-                      (pc_data_out_sig + inst_reg_bls_d_sig) when pc_source_sig = "10" and ula_grater_a_sig = '1' else
+                      (pc_data_out_sig + inst_reg_J_immediate_sig) when pc_source_sig = "01" and flag_equal_sig = '1' else -- relative jump
+                      (pc_data_out_sig + inst_reg_bls_d_sig) when pc_source_sig = "10" and flag_grater_a_sig = '1' else
                       (pc_data_out_sig + "0000001");
 
     inst_reg_opcode_sig      <= inst_reg_data_out_sig (14 downto 12);
