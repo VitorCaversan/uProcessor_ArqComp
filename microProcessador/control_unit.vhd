@@ -8,7 +8,7 @@ entity control_unit is
         opcode:             in unsigned (2 downto 0);
         clk, reset:         in std_logic;
         output_stt_machine: out unsigned(1 downto 0);
-        pc_source:          out unsigned(1 downto 0); -- +1 or jump or branch
+        pc_source:          out unsigned(2 downto 0); -- +1 or jump or branch
         pc_write_en:        out std_logic;
         reg_inst_write_en:  out std_logic;
         reg_write_en:       out std_logic;
@@ -32,10 +32,11 @@ begin
     stt_machine: state_machine port map (clk => clk, reset => reset, output => output_stt_machine_sig);
     
     output_stt_machine <= output_stt_machine_sig;
-    pc_source        <= "00" when opcode = "111" else
-                        "01" when opcode = "100" else
-                        "10" when opcode = "101" else
-                        "11";
+    pc_source        <= "000" when opcode = "111" else
+                        "001" when opcode = "100" else
+                        "010" when opcode = "101" else
+                        "011" when opcode = "110" else
+                        "100";
     pc_write_en      <= '1' when output_stt_machine_sig = "00" else
                         '0';
     reg_inst_write_en<= '1' when output_stt_machine_sig = "00" else

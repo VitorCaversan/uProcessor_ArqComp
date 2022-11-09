@@ -73,11 +73,11 @@ what was done, so you'll have to trust the creators that it simply works.
 
 Some meanings:
 
- - rs: source register;
- - rd: destination register;
- - sm: shift amout, not used in this project;
- - cc: comparison condition 
- - d : offset;
+ - rs : source register;
+ - rd : destination register;
+ - sm : shift amout, not used in this project;
+ - rcc: register for comparison;
+ - d  : offset;
 
 **Type R instructions:**
 
@@ -89,20 +89,21 @@ Some meanings:
 
 **Type I instructions:**
 
-| Instruction | Opcode |   rd   |  Immediate |         Description             |
-|-------------|--------|--------|------------|---------------------------------|
-| addi        | 001    | 3 bits |  9 bits    | rd <= rd + Immediate            |
-| moveq       | 010    | 3 bits |  9 bits    | rd <= Immediate                 |
+| Instruction | Opcode |   rd   |  Immediate |         Description                     |
+|-------------|--------|--------|------------|-----------------------------------------|
+| addi        | 001    | 3 bits |  9 bits    | rd <= rd + Immediate                    |
+| moveq       | 010    | 3 bits |  9 bits    | rd <= Immediate                         |
+|--------------------------------------------------------------------------------------|
+|                            Branch Instructions                                       |
+|--------------------------------------------------------------------------------------|
+| Instruction | Opcode |   rs   |   rcc  |     d     |           Description           |
+|-------------|--------|--------|--------|-----------|---------------------------------|
+| beq         | 100    | 3 bits | 3 bits |  6 bits   | if rd = cc then [PC] = [PC] + d |
+| blt         | 101    | 3 bits | 3 bits |  6 bits   | if rd < cc then [PC] = [PC] + d |
+| bra         | 110    |    -   |   -    |  7 bits   | [PC] = [PC] + d                 |
 
 **Type J instructions:**
 
 | Instruction | Opcode |   Immediate   |             Description             |
 |-------------|--------|---------------|-------------------------------------|
 | jump        | 111    | 9 bits        | Jumps to the Immediate mem position |
-
-**Branch Instruction:**
-
-| Instruction | Opcode |   rd   |   cc   |     d     |              Description        |
-|-------------|--------|--------|--------|-----------|---------------------------------|
-| beq         | 100    | 3 bits | 3 bits |  6 bits   | if rd = cc then [PC] = [PC] + d |
-| bls         | 101    | 3 bits | 5 bits |  4 bits   | if rd < cc then [PC] = [PC] + d |

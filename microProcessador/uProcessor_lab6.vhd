@@ -2,18 +2,18 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity uProcessor_lab5 is
+entity uProcessor_lab6 is
     port(
         clk, reset : in std_logic;
         state      : out unsigned (1 downto 0);
         progamC    : out unsigned (6 downto 0);
         instruction: out unsigned (14 downto 0);
         regA_data, regB_data : out unsigned (14 downto 0);
-        alu_output : out unsigned (14 downto 0);
+        alu_output : out unsigned (14 downto 0)
     );
-end entity uProcessor_lab5;
+end entity uProcessor_lab6;
 
-architecture rtl of uProcessor_lab5 is
+architecture rtl of uProcessor_lab6 is
     component reg_15_bits is
         port
         (
@@ -58,10 +58,11 @@ architecture rtl of uProcessor_lab5 is
     component flip_flop_d is
         port
         (
-            data_in:            in std_logic;
+            data_in:    in std_logic;
             clk, reset: in std_logic;
-            data_out:           out std_logic
-        )
+            data_out:   out std_logic
+        );
+    end component;
     
     component program_counter is
         port
@@ -87,11 +88,11 @@ architecture rtl of uProcessor_lab5 is
             opcode:             in unsigned (2 downto 0);
             clk, reset:         in std_logic;
             output_stt_machine: out unsigned(1 downto 0);
-            pc_source:          out unsigned(1 downto 0); -- +1 or jump or branch
+            pc_source:          out unsigned(2 downto 0); -- +1 or jump or branch
             pc_write_en:        out std_logic;
             reg_inst_write_en:  out std_logic;
             reg_write_en:       out std_logic;
-            ula_src_b:          out std_logic;
+            ula_src_b:          out unsigned(1 downto 0);
             alu_operation:      out unsigned(1 downto 0)
         );
     end component;
@@ -99,14 +100,13 @@ architecture rtl of uProcessor_lab5 is
     signal rom_data_out_sig:                unsigned(14 downto 0);
     signal inst_reg_data_out_sig:           unsigned(14 downto 0);
     signal inst_reg_J_immediate_sig:        unsigned(6 downto 0);
-    signal inst_reg_bls_d_sig:              unsigned(3 downto 0):
-    signal inst_reg_bls_cc_sig:             unsigned(4 downto 0);
+    signal inst_reg_branch_d_sig:           unsigned(6 downto 0);
     signal inst_reg_I_immediate_sig:        unsigned(14 downto 0);
     signal inst_reg_opcode_sig:             unsigned(2 downto 0);
     signal inst_reg_funct_sig:              unsigned(2 downto 0);
     signal inst_reg_write_en_sig:           std_logic; -- Comes from CU
     signal pc_data_in_sig, pc_data_out_sig: unsigned(6 downto 0);
-    signal pc_source_sig:                   unsigned(1 downto 0); -- Comes from CU: 00 for Jump, 01 for Immediate, 10 for +1
+    signal pc_source_sig:                   unsigned(2 downto 0); -- Comes from CU: 00 for Jump, 01 for Immediate, 10 for +1
     signal pc_write_en_sig:                 std_logic; -- Comes from CU
     signal reg_bank_selec_reg_a_sig:        unsigned(2 downto 0);
     signal reg_bank_selec_reg_b_sig:        unsigned(2 downto 0);
@@ -187,38 +187,37 @@ begin
                         equal     => ula_equal_sig,
                         greater_a => ula_greater_a_sig
                     );
+
     flag_equal: flip_flop_d port map
-                                   (
+                                    (
                                         data_in => ula_equal_sig,
                                         clk => clk,
                                         reset => reset,
                                         data_out => flag_equal_sig
-                                         
-                                   );
+                                    );
 
     flag_greater_a: flip_flop_d port map
-                                       (
+                                        (
                                             data_in => ula_greater_a_sig,
                                             clk => clk,
                                             reset => reset,
                                             data_out => flag_greater_a_sig
-                                       );
-                            
-                                
+                                        );
 
 
-    pc_data_in_sig <= inst_reg_J_immediate_sig when pc_source_sig = "00" else -- absolute jump
-                      (pc_data_out_sig + inst_reg_J_immediate_sig) when pc_source_sig = "01" and flag_equal_sig = '1' else -- relative jump
-                      (pc_data_out_sig + inst_reg_bls_d_sig) when pc_source_sig = "10" and flag_grater_a_sig = '1' else
+
+    pc_data_in_sig <= inst_reg_J_immediate_sig when pc_source_sig = "000" else -- absolute jump
+                      (pc_data_out_sig + inst_reg_branch_d_sig)    when pc_source_sig = "001" and flag_equal_sig = '1'     else -- relative jump
+                      (pc_data_out_sig + inst_reg_branch_d_sig)    when pc_source_sig = "010" and flag_greater_a_sig = '0' and flag_equal_sig = '0' else
+                      (pc_data_out_sig + inst_reg_J_immediate_sig) when pc_source_sig = "011" else
                       (pc_data_out_sig + "0000001");
 
     inst_reg_opcode_sig      <= inst_reg_data_out_sig (14 downto 12);
     inst_reg_funct_sig       <= inst_reg_data_out_sig (2 downto 0);
-    inst_reg_J_immediate_sig <= inst_reg_data_out_sig (6 downto 0);
+    inst_reg_J_immediate_sig <= inst_reg_data_out_sig (6 downto 0); -- Immediate used for jumps
     inst_reg_I_immediate_sig <= "111111" & inst_reg_data_out_sig (8 downto 0) when inst_reg_data_out_sig(8) = '1' else
-                                "000000" & inst_reg_data_out_sig (8 downto 0);
-    inst_reg_bls_d_sig <= inst_reg_data_out_sig (3 downto 0);
-    inst_reg_bls_cc_sig <= "0000000000" & inst_reg_data_out_sig(8 downto 4);
+                                "000000" & inst_reg_data_out_sig (8 downto 0); -- Immediate used for alu operations
+    inst_reg_branch_d_sig    <= (inst_reg_data_out_sig(5) & inst_reg_data_out_sig (5 downto 0)) - 1; -- Immediate used for branching
 
     -- Parses instruction's bits to select registers
     reg_bank_selec_reg_a_sig <= inst_reg_data_out_sig (11 downto 9);
@@ -228,7 +227,6 @@ begin
     ula_data_in_a_sig <= "000000000000000" when (inst_reg_opcode_sig = "010") or (inst_reg_opcode_sig = "000" and inst_reg_funct_sig = "100") else
                         reg_bank_data_a_sig;
     ula_data_in_b_sig <= inst_reg_I_immediate_sig when ula_src_b_sig = "01" else
-                         inst_reg_bls_cc_sig when ula_src_b = "10" else
                          reg_bank_data_b_sig; -- Chooses what will go to ALU's data_in b
 
     ula_operation_sig <= "01" when (cu_ula_operation_sig = "00" and inst_reg_funct_sig = "010") else

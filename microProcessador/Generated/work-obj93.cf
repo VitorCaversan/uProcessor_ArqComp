@@ -1,28 +1,37 @@
 v 4
-file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/uProcessor_lab5.vhd" "e426ab167751410694fe942b1a207434f271aaa8" "20221104130431.684":
-  entity uprocessor_lab5 at 1( 0) + 0 on 13;
-  architecture rtl of uprocessor_lab5 at 16( 430) + 0 on 14;
-file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/rom.vhd" "bb52e7e3478b9565ead9f0c820d6764643f57c9c" "20221104130431.684":
-  entity rom at 1( 0) + 0 on 19;
-  architecture rtl of rom at 13( 231) + 0 on 20;
-file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/ula.vhd" "f660cc5545890646ed06fcc8258d23633618a2cb" "20221104130431.684":
-  entity ula at 1( 0) + 0 on 25;
-  architecture rtl of ula at 15( 374) + 0 on 26;
-file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/reg_15_bits.vhd" "ed6076c60f9e463abae96d9999f1058d07123a47" "20221104130431.684":
-  entity reg_15_bits at 1( 0) + 0 on 15;
-  architecture rtl of reg_15_bits at 14( 299) + 0 on 16;
-file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/state_machine.vhd" "f7c5a2289c27f1717957382670d16da37018fa0e" "20221104130431.684":
-  entity state_machine at 1( 0) + 0 on 27;
-  architecture rtl of state_machine at 13( 202) + 0 on 28;
-file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/reg_bank.vhd" "425c4085408b7d87fbe801f18f85302501689178" "20221104130431.684":
-  entity reg_bank at 9( 267) + 0 on 21;
-  architecture rtl of reg_bank at 24( 681) + 0 on 22;
-file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/program_counter.vhd" "9c6f945a7c4e45800477dc881c415f3f380fbf7a" "20221104130431.684":
-  entity program_counter at 1( 0) + 0 on 17;
-  architecture rtl of program_counter at 14( 322) + 0 on 18;
-file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/control_unit.vhd" "3ca7b1f2b2a150874490f802d51ee8f66ac6db9c" "20221104130431.684":
-  entity control_unit at 1( 0) + 0 on 23;
-  architecture rtl of control_unit at 20( 573) + 0 on 24;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/flip_flop_d.vhd" "4bf286ab903b549a5a02c4c28c5a0ea2ca8e1abd" "20221109012855.208":
+  entity flip_flop_d at 1( 0) + 0 on 33;
+  architecture rtl of flip_flop_d at 14( 241) + 0 on 34;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/processador_tb_lab6.vhd" "6b66de964d8671bb02035f6918605d6797e48c91" "20221109012855.208":
+  entity processador_tb_lab6 at 1( 0) + 0 on 17;
+  architecture rtl of processador_tb_lab6 at 8( 133) + 0 on 18;
 file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/processador_tb.vhd" "06e57d1aba149cc04dd5aed5c8c675ebb14ddb7b" "20221104130431.684":
   entity processador_tb at 1( 0) + 0 on 11;
   architecture rtl of processador_tb at 8( 123) + 0 on 12;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/control_unit.vhd" "b4cfd9a4eafe6461639d05a3ec867e44793486df" "20221109012855.208":
+  entity control_unit at 1( 0) + 0 on 29;
+  architecture rtl of control_unit at 20( 605) + 0 on 30;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/program_counter.vhd" "9c6f945a7c4e45800477dc881c415f3f380fbf7a" "20221109012855.208":
+  entity program_counter at 1( 0) + 0 on 23;
+  architecture rtl of program_counter at 14( 322) + 0 on 24;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/reg_bank.vhd" "425c4085408b7d87fbe801f18f85302501689178" "20221109012855.208":
+  entity reg_bank at 9( 267) + 0 on 27;
+  architecture rtl of reg_bank at 24( 681) + 0 on 28;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/state_machine.vhd" "f7c5a2289c27f1717957382670d16da37018fa0e" "20221109012855.208":
+  entity state_machine at 1( 0) + 0 on 35;
+  architecture rtl of state_machine at 13( 202) + 0 on 36;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/reg_15_bits.vhd" "ed6076c60f9e463abae96d9999f1058d07123a47" "20221109012855.208":
+  entity reg_15_bits at 1( 0) + 0 on 21;
+  architecture rtl of reg_15_bits at 14( 299) + 0 on 22;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/ula.vhd" "f660cc5545890646ed06fcc8258d23633618a2cb" "20221109012855.208":
+  entity ula at 1( 0) + 0 on 31;
+  architecture rtl of ula at 15( 374) + 0 on 32;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/rom.vhd" "3f4cfe883c70e12a664ea03e5ee301eb97aa1d5d" "20221109012855.208":
+  entity rom at 1( 0) + 0 on 25;
+  architecture rtl of rom at 13( 231) + 0 on 26;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/uProcessor_lab5.vhd" "e426ab167751410694fe942b1a207434f271aaa8" "20221109011111.047":
+  entity uprocessor_lab5 at 1( 0) + 0 on 15;
+  architecture rtl of uprocessor_lab5 at 16( 430) + 0 on 16;
+file / "/home/joao/Documents/FACULDADE/6_PERIODO/ArqComp/uProcessor_ArqComp/microProcessador/uProcessor_lab6.vhd" "9c8f86bfe6e0f8d8ce12f0e42d6c75088b1c9b47" "20221109012855.208":
+  entity uprocessor_lab6 at 1( 0) + 0 on 19;
+  architecture rtl of uprocessor_lab6 at 16( 429) + 0 on 20;
