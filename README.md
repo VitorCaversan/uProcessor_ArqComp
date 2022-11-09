@@ -60,10 +60,10 @@ This microprocessor has the following components:
  - An instruction register;
  - Register bank;
  - Arithmetic Logic Unit (ALU);
- - Control Unit (CU).
+ - Control Unit (CU);
+ - Flags to sinalize conditions.
 
-At this point, **the hole project has been changed**, all of those components were created beforehand but there was no time to register
-what was done, so you'll have to trust the creators that it simply works.
+At this point, **the hole project has been changed**, all of those components were created beforehand but there was no time to register what was done, so you'll have to trust the creators that it simply works.
 
 **Word Width specifications:**
  - Instructions, register bank and ula: 15 bits width;
@@ -94,7 +94,7 @@ Some meanings:
 | addi        | 001    | 3 bits |  9 bits    | rd <= rd + Immediate                    |
 | moveq       | 010    | 3 bits |  9 bits    | rd <= Immediate                         |
 
-                              Branch Instructions                                       
+Branch Instructions
 
 | Instruction | Opcode |   rs   |   rcc  |     d     |           Description           |
 |-------------|--------|--------|--------|-----------|---------------------------------|
