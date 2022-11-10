@@ -59,7 +59,7 @@ architecture rtl of uProcessor_lab6 is
         port
         (
             data_in:    in std_logic;
-            clk, reset: in std_logic;
+            clk, reset, write_en: in std_logic;
             data_out:   out std_logic
         );
     end component;
@@ -91,7 +91,7 @@ architecture rtl of uProcessor_lab6 is
             pc_source:          out unsigned(2 downto 0); -- +1 or jump or branch
             pc_write_en:        out std_logic;
             reg_inst_write_en:  out std_logic;
-            reg_write_en:       out std_logic;
+            flags_write_en:     out std_logic;
             ula_src_b:          out unsigned(1 downto 0);
             alu_operation:      out unsigned(1 downto 0)
         );
@@ -123,6 +123,7 @@ architecture rtl of uProcessor_lab6 is
     signal ula_greater_a_sig:               std_logic;
     signal flag_equal_sig:                  std_logic;
     signal flag_greater_a_sig:              std_logic;
+    signal flag_write_en_sig:               std_logic;
     signal cu_ula_operation_sig:            unsigned(1 downto 0); -- Comes from CU: 00 for R, 01 for I, 10 for J.
     signal state_sig:                       unsigned(1 downto 0);
 begin
@@ -172,7 +173,7 @@ begin
                                 pc_source          => pc_source_sig,
                                 pc_write_en        => pc_write_en_sig,
                                 reg_inst_write_en  => inst_reg_write_en_sig,
-                                reg_write_en       => reg_bank_write_en_sig,
+                                flags_write_en     => flag_write_en_sig,
                                 ula_src_b          => ula_src_b_sig,
                                 alu_operation      => cu_ula_operation_sig
                             );
@@ -193,6 +194,7 @@ begin
                                         data_in => ula_equal_sig,
                                         clk => clk,
                                         reset => reset,
+                                        write_en => flag_write_en_sig,
                                         data_out => flag_equal_sig
                                     );
 
@@ -201,6 +203,7 @@ begin
                                             data_in => ula_greater_a_sig,
                                             clk => clk,
                                             reset => reset,
+                                            write_en => flag_write_en_sig,
                                             data_out => flag_greater_a_sig
                                         );
 
@@ -217,7 +220,7 @@ begin
     inst_reg_J_immediate_sig <= inst_reg_data_out_sig (6 downto 0); -- Immediate used for jumps
     inst_reg_I_immediate_sig <= "111111" & inst_reg_data_out_sig (8 downto 0) when inst_reg_data_out_sig(8) = '1' else
                                 "000000" & inst_reg_data_out_sig (8 downto 0); -- Immediate used for alu operations
-    inst_reg_branch_d_sig    <= (inst_reg_data_out_sig(5) & inst_reg_data_out_sig (5 downto 0)) - 1; -- Immediate used for branching
+    inst_reg_branch_d_sig    <= inst_reg_data_out_sig (6 downto 0) - 1; -- Immediate used for branching
 
     -- Parses instruction's bits to select registers
     reg_bank_selec_reg_a_sig <= inst_reg_data_out_sig (11 downto 9);
@@ -229,9 +232,12 @@ begin
     ula_data_in_b_sig <= inst_reg_I_immediate_sig when ula_src_b_sig = "01" else
                          reg_bank_data_b_sig; -- Chooses what will go to ALU's data_in b
 
-    ula_operation_sig <= "01" when (cu_ula_operation_sig = "00" and inst_reg_funct_sig = "010") else
+    ula_operation_sig <= "01" when (cu_ula_operation_sig = "00" and (inst_reg_funct_sig = "010" or inst_reg_funct_sig = "101")) else
                          "10" when (cu_ula_operation_sig = "00" and inst_reg_funct_sig = "011") else
                          "00"; -- What the ALU does
+
+    reg_bank_write_en_sig <= '1' when flag_write_en_sig = '1' and inst_reg_funct_sig /= "101" else
+                             '0';
 
     -- Top level outputs
     state       <= state_sig;

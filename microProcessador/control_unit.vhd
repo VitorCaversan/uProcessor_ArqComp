@@ -11,7 +11,7 @@ entity control_unit is
         pc_source:          out unsigned(2 downto 0); -- +1 or jump or branch
         pc_write_en:        out std_logic;
         reg_inst_write_en:  out std_logic;
-        reg_write_en:       out std_logic;
+        flags_write_en:       out std_logic;
         ula_src_b:          out unsigned(1 downto 0);
         alu_operation:      out unsigned(1 downto 0)
     );
@@ -41,7 +41,7 @@ begin
                         '0';
     reg_inst_write_en<= '1' when output_stt_machine_sig = "00" else
                         '0';
-    reg_write_en     <= '1' when (opcode /= "111" and opcode /= "100" and opcode /= "101") and output_stt_machine_sig = "10" else
+    flags_write_en     <= '1' when (opcode /= "111" and opcode /= "100" and opcode /= "101" and opcode /= "110") and output_stt_machine_sig = "10" else
                         '0';
     ula_src_b        <= "00" when opcode = "000" else
                         "10" when opcode = "101" else

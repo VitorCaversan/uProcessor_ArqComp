@@ -6,7 +6,7 @@ entity flip_flop_d is
     port
     (
         data_in:    in std_logic;
-        clk, reset: in std_logic;
+        clk, reset, write_en: in std_logic;
         data_out:   out std_logic
     );
 end entity flip_flop_d;
@@ -18,8 +18,10 @@ begin
     begin
         if reset = '1' then
             in_value <= '0';
-        elsif(rising_edge(clk)) then
-            in_value <= data_in;
+        elsif write_en = '1' then
+            if(rising_edge(clk)) then
+                in_value <= data_in;
+            end if;
         end if;
     end process;
 

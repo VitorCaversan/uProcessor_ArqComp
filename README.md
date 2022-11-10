@@ -48,7 +48,7 @@ For the outputs we have the desired register values.
 
 It was needed to unite the ALU with the register bank, and so the microProcessor was born.
 
-The outputs of the register bank were connected to the inputs of the ALU, and the ALU's output was connected to the register bank *data_in* input. The only addition in the hole system was a multiplexor put between the __b__ register output and the ULA's __b__ input. It is responsible to choose among 4 different options for the ULA's __b__ input, that will later be used.
+The outputs of the register bank were connected to the inputs of the ALU, and the ALU's output was connected to the register bank *data_in* input. The only addition in the hole system was a multiplexor put between the __b__ register output and the ALU's __b__ input. It is responsible to choose among 4 different options for the ALU's __b__ input, that will later be used.
 
 
 ## Making a simple uProcessor
@@ -61,7 +61,7 @@ This microprocessor has the following components:
  - Register bank;
  - Arithmetic Logic Unit (ALU);
  - Control Unit (CU);
- - Flags to sinalize conditions.
+ - Flags to signalize conditions.
 
 At this point, **the hole project has been changed**, all of those components were created beforehand but there was no time to register what was done, so you'll have to trust the creators that it simply works.
 
@@ -75,7 +75,7 @@ Some meanings:
 
  - rs : source register;
  - rd : destination register;
- - sm : shift amout, not used in this project;
+ - sm : shift amount, not used in this project;
  - rcc: register for comparison;
  - d  : offset;
 
@@ -86,6 +86,7 @@ Some meanings:
 | add         | 000    | 3 bits | 3 bits | 3 bits | 001      | rd <= rd + rs       |
 | sub         | 000    | 3 bits | 3 bits | 3 bits | 010      | rd <= rd - rs       |
 | move        | 000    | 3 bits | 3 bits | 3 bits | 100      | rd <= rs            |
+| cmp         | 000    | 3 bits | 3 bits | 3 bits | 101      | rd - rs             |
 
 **Type I instructions:**
 
@@ -96,14 +97,20 @@ Some meanings:
 
 Branch Instructions
 
-| Instruction | Opcode |   rs   |   rcc  |     d     |           Description           |
-|-------------|--------|--------|--------|-----------|---------------------------------|
-| beq         | 100    | 3 bits | 3 bits |  6 bits   | if rd = cc then [PC] = [PC] + d |
-| blt         | 101    | 3 bits | 3 bits |  6 bits   | if rd < cc then [PC] = [PC] + d |
-| bra         | 110    |    -   |   -    |  7 bits   | [PC] = [PC] + d                 |
+| Instruction | Opcode | Unused bits |     d     |                       Description                          |
+|-------------|--------|-------------|-----------|------------------------------------------------------------|
+| beq         | 100    |    5 bits   |  7 bits   | if (equalFlag = 1) then [PC] = [PC] + d                    |
+| blt         | 101    |    5 bits   |  7 bits   | if (equalFlag = 0 and greaterFlag = 0) then [PC] = [PC] + d|
+| bra         | 110    |    5 bits   |  7 bits   | [PC] = [PC] + d                                            |
 
 **Type J instructions:**
 
-| Instruction | Opcode |   Immediate   |             Description             |
-|-------------|--------|---------------|-------------------------------------|
-| jump        | 111    | 9 bits        | Jumps to the Immediate mem position |
+| Instruction | Opcode | Unused bits |   Immediate   |    Description   |
+|-------------|--------|-------------|---------------|------------------|
+| jump        | 111    |    5 bits   |    7 bits     | [PC] = Immediate |
+
+### How branching works
+
+It works by using a relative jump when a condition is met. This condition is based on a comparison done beforehand when using the cmp instruction.
+
+The cmp instruction simply subtracts a register value from another, only to signalize (using some alu's outputs and putting those in flags) rather a value is greater or equal to the other. With both this flags, all comparisons can be done, so that branching can happen.
