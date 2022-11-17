@@ -2,6 +2,7 @@
   <ItemGroup>
     <File Include="control_unit.vhd" />
     <File Include="count_one.vhd" />
+    <File Include="flip_flop_d.vhd" />
     <File Include="lab4_top_level.vhd" />
     <File Include="lab4_top_level_testbench.vhd" />
     <File Include="multiplex8x1.vhd" />
@@ -11,6 +12,7 @@
     <File Include="pc_rom.vhd" />
     <File Include="pc_rom_testbench.vhd" />
     <File Include="processador_tb.vhd" />
+    <File Include="processador_tb_lab6.vhd" />
     <File Include="program_counter.vhd" />
     <File Include="reg_15_bits.vhd" />
     <File Include="reg_bank.vhd" />
@@ -21,11 +23,12 @@
     <File Include="state_machine_testbench.vhd" />
     <File Include="uProcessor.vhd" />
     <File Include="uProcessor_lab5.vhd" />
+    <File Include="uProcessor_lab6.vhd" />
     <File Include="uProcessor_testbench.vhd" />
     <File Include="ula.vhd" />
     <File Include="ula_testbench.vhd" />
   </ItemGroup>
   <PropertyGroup>
-    <HardwareStartPath>uProcessor_lab5.vhd</HardwareStartPath>
+    <HardwareStartPath>uProcessor_lab6.vhd</HardwareStartPath>
   </PropertyGroup>
 </Project>

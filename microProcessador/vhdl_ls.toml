@@ -3,6 +3,7 @@
 work.files = [
 	'control_unit.vhd',
 	'count_one.vhd',
+	'flip_flop_d.vhd',
 	'lab4_top_level.vhd',
 	'lab4_top_level_testbench.vhd',
 	'multiplex8x1.vhd',
@@ -12,6 +13,7 @@ work.files = [
 	'pc_rom.vhd',
 	'pc_rom_testbench.vhd',
 	'processador_tb.vhd',
+	'processador_tb_lab6.vhd',
 	'program_counter.vhd',
 	'reg_15_bits.vhd',
 	'reg_bank.vhd',
@@ -22,6 +24,7 @@ work.files = [
 	'state_machine_testbench.vhd',
 	'uProcessor.vhd',
 	'uProcessor_lab5.vhd',
+	'uProcessor_lab6.vhd',
 	'uProcessor_testbench.vhd',
 	'ula.vhd',
 	'ula_testbench.vhd'
@@ -30,6 +33,7 @@ work.files = [
 files = [
 	'control_unit.vhd',
 	'count_one.vhd',
+	'flip_flop_d.vhd',
 	'lab4_top_level.vhd',
 	'lab4_top_level_testbench.vhd',
 	'multiplex8x1.vhd',
@@ -39,6 +43,7 @@ files = [
 	'pc_rom.vhd',
 	'pc_rom_testbench.vhd',
 	'processador_tb.vhd',
+	'processador_tb_lab6.vhd',
 	'program_counter.vhd',
 	'reg_15_bits.vhd',
 	'reg_bank.vhd',
@@ -49,6 +54,7 @@ files = [
 	'state_machine_testbench.vhd',
 	'uProcessor.vhd',
 	'uProcessor_lab5.vhd',
+	'uProcessor_lab6.vhd',
 	'uProcessor_testbench.vhd',
 	'ula.vhd',
 	'ula_testbench.vhd'
