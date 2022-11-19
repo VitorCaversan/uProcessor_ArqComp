@@ -5,15 +5,18 @@ use IEEE.numeric_std.all;
 entity control_unit is
     port
     (
-        opcode:             in unsigned (2 downto 0);
-        clk, reset:         in std_logic;
-        output_stt_machine: out unsigned(1 downto 0);
-        pc_source:          out unsigned(2 downto 0); -- +1 or jump or branch
-        pc_write_en:        out std_logic;
-        reg_inst_write_en:  out std_logic;
+        opcode:               in unsigned (2 downto 0);
+        funct:                in unsigned (2 downto 0);
+        clk, reset:           in std_logic;
+        output_stt_machine:   out unsigned(1 downto 0);
+        pc_source:            out unsigned(2 downto 0); -- +1 or jump or branch
+        pc_write_en:          out std_logic;
+        reg_inst_write_en:    out std_logic;
         flags_write_en:       out std_logic;
-        ula_src_b:          out unsigned(1 downto 0);
-        alu_operation:      out unsigned(1 downto 0)
+        ula_src_b:            out unsigned(1 downto 0);
+        alu_operation:        out unsigned(1 downto 0);
+        reg_bank_data_in_mux: out std_logic;
+        ram_write_en:         out std_logic
     );
 end entity control_unit;
 
@@ -49,5 +52,11 @@ begin
     alu_operation    <= "00" when opcode = "000" else
                         "10" when opcode = "111" else
                         "01"; -- opcodes
+
+    -- Done for lab7: making a RAM
+    reg_bank_data_in_mux <= '1' when opcode = "000" and funct = "110" else
+                            '0';
+    ram_write_en         <= '1' when opcode = "000" and funct = "111" else
+                            '0';
 
 end architecture rtl;
