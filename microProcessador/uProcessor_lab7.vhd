@@ -112,6 +112,7 @@ architecture rtl of uProcessor_lab7 is
     end component;
 
     signal rom_data_out_sig:                unsigned(14 downto 0);
+    signal inst_reg_data_in_sig:            unsigned(14 downto 0);
     signal inst_reg_data_out_sig:           unsigned(14 downto 0);
     signal inst_reg_J_immediate_sig:        unsigned(6 downto 0);
     signal inst_reg_branch_d_sig:           unsigned(6 downto 0);
@@ -150,7 +151,7 @@ begin
     
     inst_register: reg_15_bits port map
                                     (
-                                        data_in  => rom_data_out_sig,
+                                        data_in  => inst_reg_data_in_sig,
                                         clk      => clk,
                                         reset    => reset,
                                         write_en => inst_reg_write_en_sig,
@@ -240,6 +241,8 @@ begin
                                 );
 
 
+    inst_reg_data_in_sig <= "000000000000000" when pc_source_sig = "000" or pc_source_sig = "001" or pc_source_sig = "010" or pc_source_sig = "011" else
+                            rom_data_out_sig;
 
     pc_data_in_sig <= inst_reg_J_immediate_sig when pc_source_sig = "000" else -- absolute jump
                       (pc_data_out_sig + inst_reg_branch_d_sig)    when pc_source_sig = "001" and flag_equal_sig = '1'     else -- relative jump
