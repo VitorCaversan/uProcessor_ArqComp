@@ -81,33 +81,35 @@ Some meanings:
 
 **Type R instructions:**
 
-| Instruction | Opcode |   rd   |   rs   |   sm   | Function |     Description     |
-|-------------|--------|--------|--------|--------|----------|---------------------|
-| add         | 000    | 3 bits | 3 bits | 3 bits | 001      | rd <= rd + rs       |
-| sub         | 000    | 3 bits | 3 bits | 3 bits | 010      | rd <= rd - rs       |
-| move        | 000    | 3 bits | 3 bits | 3 bits | 100      | rd <= rs            |
-| cmp         | 000    | 3 bits | 3 bits | 3 bits | 101      | rd - rs             |
+| Instruction | Opcode |   rd   |   rs   |   sm   | Function |     Description                            |    Syntax    |
+|-------------|--------|--------|--------|--------|----------|--------------------------------------------|--------------|
+| add         | 000    | 3 bits | 3 bits | 3 bits | 001      | rd <= rd + rs                              | add $rd,$rs  |
+| sub         | 000    | 3 bits | 3 bits | 3 bits | 010      | rd <= rd - rs                              | sub $rd,$rs  |
+| move        | 000    | 3 bits | 3 bits | 3 bits | 100      | rd <= rs                                   | move $rd,$rs |
+|             |  ''    |   ''   |   ''   |   ''   | 110      | rd <= M[rs]                                | move $rd,#$rs|
+|             |  ''    |   ''   |   ''   |   ''   | 111      | M[rd] <= rs                                | move #$rd,$rs|
+| cmp         | 000    | 3 bits | 3 bits | 3 bits | 101      | rd - rs only used to compare and set flags | cmp $rd,$rs  |
 
 **Type I instructions:**
 
-| Instruction | Opcode |   rd   |  Immediate |         Description                     |
-|-------------|--------|--------|------------|-----------------------------------------|
-| addi        | 001    | 3 bits |  9 bits    | rd <= rd + Immediate                    |
-| moveq       | 010    | 3 bits |  9 bits    | rd <= Immediate                         |
+| Instruction | Opcode |   rd   |  Immediate |         Description                     |        Syntax       |
+|-------------|--------|--------|------------|-----------------------------------------|---------------------|
+| addi        | 001    | 3 bits |  9 bits    | rd <= rd + Immediate                    | addi $rd,immediate  |
+| moveq       | 010    | 3 bits |  9 bits    | rd <= Immediate                         | moveq $rd,immediate |
 
 Branch Instructions
 
-| Instruction | Opcode | Unused bits |     d     |                       Description                          |
-|-------------|--------|-------------|-----------|------------------------------------------------------------|
-| beq         | 100    |    5 bits   |  7 bits   | if (equalFlag = 1) then [PC] = [PC] + d                    |
-| blt         | 101    |    5 bits   |  7 bits   | if (equalFlag = 0 and greaterFlag = 0) then [PC] = [PC] + d|
-| bra         | 110    |    5 bits   |  7 bits   | [PC] = [PC] + d                                            |
+| Instruction | Opcode | Unused bits |     d     |                       Description                          | Syntax |
+|-------------|--------|-------------|-----------|------------------------------------------------------------|--------|
+| beq         | 100    |    5 bits   |  7 bits   | if (equalFlag = 1) then [PC] = [PC] + d                    |  beq d |
+| blt         | 101    |    5 bits   |  7 bits   | if (equalFlag = 0 and greaterFlag = 0) then [PC] = [PC] + d|  blt d |
+| bra         | 110    |    5 bits   |  7 bits   | [PC] = [PC] + d                                            |  bra d |
 
 **Type J instructions:**
 
-| Instruction | Opcode | Unused bits |   Immediate   |    Description   |
-|-------------|--------|-------------|---------------|------------------|
-| jump        | 111    |    5 bits   |    7 bits     | [PC] = Immediate |
+| Instruction | Opcode | Unused bits |   Immediate   |    Description   |    Syntax      |
+|-------------|--------|-------------|---------------|------------------|----------------|
+| jump        | 111    |    5 bits   |    7 bits     | [PC] = Immediate | jump immediate |
 
 ### How branching works
 
