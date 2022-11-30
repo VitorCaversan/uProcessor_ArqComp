@@ -81,14 +81,14 @@ Some meanings:
 
 **Type R instructions:**
 
-| Instruction | Opcode |   rd   |   rs   |   sm   | Function |     Description     |    Syntax    |
-|-------------|--------|--------|--------|--------|----------|---------------------|--------------|
-| add         | 000    | 3 bits | 3 bits | 3 bits | 001      | rd <= rd + rs       | add $rd,$rs  |
-| sub         | 000    | 3 bits | 3 bits | 3 bits | 010      | rd <= rd - rs       | sub $rd,$rs  |
-| move        | 000    | 3 bits | 3 bits | 3 bits | 100      | rd <= rs            | move $rd,$rs |
-|             |  ''    |   ''   |   ''   |   ''   | 110      | rd <= M[rs]         | move $rd,#$rs|
-|             |  ''    |   ''   |   ''   |   ''   | 111      | M[rd] <= rs         | move #$rd,$rs|
-| cmp         | 000    | 3 bits | 3 bits | 3 bits | 101      | rd - rs             | cmp $rd,$rs  |
+| Instruction | Opcode |   rd   |   rs   |   sm   | Function |     Description                            |    Syntax    |
+|-------------|--------|--------|--------|--------|----------|--------------------------------------------|--------------|
+| add         | 000    | 3 bits | 3 bits | 3 bits | 001      | rd <= rd + rs                              | add $rd,$rs  |
+| sub         | 000    | 3 bits | 3 bits | 3 bits | 010      | rd <= rd - rs                              | sub $rd,$rs  |
+| move        | 000    | 3 bits | 3 bits | 3 bits | 100      | rd <= rs                                   | move $rd,$rs |
+|             |  ''    |   ''   |   ''   |   ''   | 110      | rd <= M[rs]                                | move $rd,#$rs|
+|             |  ''    |   ''   |   ''   |   ''   | 111      | M[rd] <= rs                                | move #$rd,$rs|
+| cmp         | 000    | 3 bits | 3 bits | 3 bits | 101      | rd - rs only used to compare and set flags | cmp $rd,$rs  |
 
 **Type I instructions:**
 
